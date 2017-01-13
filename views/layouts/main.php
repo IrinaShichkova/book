@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\bootstrap\Alert;
 
 AppAsset::register($this);
 ?>
@@ -60,6 +61,14 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+
+        <?php
+        foreach( \Yii::$app->session->getAllFlashes() as $key => $message ){
+            Alert::begin(['options' => ['class' => "alert-$key"]]);
+            echo $message;
+            Alert::end();
+        }?>
+
         <?= $content ?>
     </div>
 </div>

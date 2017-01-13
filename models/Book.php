@@ -17,9 +17,11 @@ class Book extends _book
     public function rules()
     {
         return [
-            [['fam_id', 'nam_id', 'otc_id', 'str_id', 'n_home'], 'integer'],
+            [['fam_id', 'nam_id', 'otc_id', 'str_id', 'n_home', 'tel'], 'integer'],
             [['n_home', 'tel'], 'required'],
-            [['corp', 'tel'], 'string'],
+            [['corp'], 'string'],
+            [['tel'], 'integer', 'min' => '10000000000', 'max'=> '99999999999'],
+            ['tel', 'unique'],
             [['fam_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fam::className(), 'targetAttribute' => ['fam_id' => 'f_id']],
             [['nam_id'], 'exist', 'skipOnError' => true, 'targetClass' => Name::className(), 'targetAttribute' => ['nam_id' => 'n_id']],
             [['otc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Otc::className(), 'targetAttribute' => ['otc_id' => 'o_id']],
@@ -55,7 +57,7 @@ class Book extends _book
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getNam()
+    public function getName()
     {
         return $this->hasOne(Name::className(), ['n_id' => 'nam_id']);
     }
@@ -71,7 +73,7 @@ class Book extends _book
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStr()
+    public function getStreet()
     {
         return $this->hasOne(Street::className(), ['s_id' => 'str_id']);
     }

@@ -8,6 +8,7 @@ use app\models\NameSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Book;
 
 /**
  * NameController implements the CRUD actions for Name model.
@@ -101,7 +102,13 @@ class NameController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if(Book::find()->where(['nam_id' => $model->n_id])->one()) {
+            Yii::$app->getSession()->setFlash('danger', "Нельзя!");
+        } else {
+            $model->delete();
+        }
 
         return $this->redirect(['index']);
     }

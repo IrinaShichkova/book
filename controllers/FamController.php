@@ -8,6 +8,7 @@ use app\models\FamSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Book;
 
 /**
  * FamController implements the CRUD actions for Fam model.
@@ -101,7 +102,13 @@ class FamController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if(Book::find()->where(['fam_id' => $model->f_id])->one()) {
+            Yii::$app->getSession()->setFlash('danger', "Нельзя!");
+        } else {
+            $model->delete();
+        }
 
         return $this->redirect(['index']);
     }

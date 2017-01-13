@@ -8,6 +8,7 @@ use app\models\OtcSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Book;
 
 /**
  * OtcController implements the CRUD actions for Otc model.
@@ -101,7 +102,13 @@ class OtcController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if(Book::find()->where(['otc_id' => $model->o_id])->one()) {
+            Yii::$app->getSession()->setFlash('danger', "Нельзя!");
+        } else {
+            $model->delete();
+        }
 
         return $this->redirect(['index']);
     }

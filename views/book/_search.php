@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Fam;
+use app\models\Name;
+use app\models\Otc;
+use app\models\Street;
 use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
@@ -35,7 +38,7 @@ use yii\helpers\ArrayHelper;
 
     <div class="row">
         <div class="col-md-3">
-            <?= $form->field($model, 'fam_id')->dropDownList([''=>'']+ArrayHelper::map(Fam::find()->orderBy('f_val')->all(), 'f_id', 'f_val'))  ?>
+            <?= $form->field($model, 'f_val')->dropDownList([''=>'']+ArrayHelper::map(Fam::find()->orderBy('f_val')->all(), 'f_val', 'f_val'))->label('Фамилия') ?>
         </div>
         <div class="col-md-1">
             <div class="form-group pull-left">
@@ -45,33 +48,33 @@ use yii\helpers\ArrayHelper;
         </div>
 
         <div class="col-md-3">
-            <?= $form->field($model, 'nam_id') ?>
+            <?= $form->field($model, 'n_val')->dropDownList([''=>'']+ArrayHelper::map(Name::find()->orderBy('n_val')->all(), 'n_val', 'n_val'))->label('Имя') ?>
         </div>
         <div class="col-md-1">
             <div class="form-group pull-left">
                 <label class="control-label">&nbsp;</label>
-                <button type="submit" class="btn btn-default form-control">...</button>
+                <?= Html::a('...', '/name', ['class' => 'btn btn-default form-control', 'target' => '_blank']) ?>
             </div>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'otc_id') ?>
+            <?= $form->field($model, 'o_val')->dropDownList([''=>'']+ArrayHelper::map(Otc::find()->orderBy('o_val')->all(), 'o_val', 'o_val'))->label('Отчество') ?>
         </div>
         <div class="col-md-1">
             <div class="form-group pull-left">
                 <label class="control-label">&nbsp;</label>
-                <button type="submit" class="btn btn-default form-control">...</button>
+                    <?= Html::a('...', '/otc', ['class' => 'btn btn-default form-control', 'target' => '_blank']) ?>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-3">
-            <?= $form->field($model, 'str_id') ?>
+            <?= $form->field($model, 's_val')->dropDownList([''=>'']+ArrayHelper::map(Street::find()->orderBy('s_val')->all(), 's_val', 's_val'))->label('Улица') ?>
         </div>
         <div class="col-md-1">
             <div class="form-group pull-left">
                 <label class="control-label">&nbsp;</label>
-                <button type="submit" class="btn btn-default form-control" href="/street">...</button>
+                    <?= Html::a('...', '/street', ['class' => 'btn btn-default form-control', 'target' => '_blank']) ?>
             </div>
         </div>
         <div class="col-md-3 ">
